@@ -14,6 +14,11 @@ const thoughtSchema = new Schema(
             type: Date,
             default: Date.now,
             // use getter method to format timestamp on query
+            //https://www.geeksforgeeks.org/mongoose-schematypes-getters/
+            //https://chat.openai.com/c/e1023eb5-3b15-44f4-af2c-64df6894f9df
+            get: function (createdAt) {
+                return new Date(createdAt).toLocaleString();
+            }
         },
         username: {
             type: String,
