@@ -1,0 +1,32 @@
+{
+  "name": "socialapi",
+  "version": "1.0.0",
+  "description": "This is and API for a social media network using NoSQL database",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/milena-allaway/socialAPI.git"
+  },
+  "keywords": [
+    "social",
+    "network",
+    "api",
+    "node",
+    "mongodb",
+    "nosql",
+    "mongoose"
+  ],
+  "author": "Milena Allaway",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/milena-allaway/socialAPI/issues"
+  },
+  "homepage": "https://github.com/milena-allaway/socialAPI#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^8.0.0"
+  }
+}
