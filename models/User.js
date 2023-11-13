@@ -25,8 +25,8 @@ const userSchema = new Schema(
         ],
         friends: [
             {
-                type: Schema.Types.ObjectId,
-                ref: 'User'
+                    type: Schema.Types.ObjectId,
+                    ref: 'User'
             }
         ]
     },
@@ -37,7 +37,6 @@ const userSchema = new Schema(
             getters: true
         },
         id: false
-
     }
 );
 

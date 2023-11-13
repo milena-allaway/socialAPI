@@ -63,7 +63,7 @@ module.exports = {
             }
 //BONUS remove a user's associated thoughts when deleted
             await Thought.deleteMany({ _id: { $in: user.thoughts } });
-            res.json({ message: 'Successfully deleted user and associated thoughts!' });
+            res.json({ message: `Successfully deleted user "${user.username}" and associated thoughts!` });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -85,7 +85,17 @@ module.exports = {
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this id!' });        
             }
-            res.json(user);
+            // respond with user and friend data
+            const response = {
+                userId: user._id,
+                username: user.username,
+                addedFriend: {
+                    userId: friend._id,
+                    username: friend.username
+                },
+                message: `Successfully added ${friend.username} to ${user.username}'s friends list!`
+            };
+            res.json(response);
         } catch (err) {
             res.status(500).json(err);
         }
@@ -108,7 +118,8 @@ module.exports = {
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this id!' });        
             }
-            res.json(user);
+            // respond with user and friend data
+            res.json({message: `Successfully removed ${friend.username} from ${user.username}'s friends list!`});
         } catch (err) {
             res.status(500).json(err);
         }
