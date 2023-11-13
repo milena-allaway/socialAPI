@@ -28,6 +28,7 @@ const reactionSchema = new Schema(
     // allows for virtuals
     {
         toJSON: {
+            virtuals: true,
             getters: true,
         },
         id: false
