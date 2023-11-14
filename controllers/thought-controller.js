@@ -1,4 +1,4 @@
-const { Thought, User, Reaction } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
     // GET all thoughts
@@ -64,7 +64,7 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }
-            res.json({ message: 'Successfully deleted the thought!' });
+            res.json({ message: `Successfully deleted the thought '${thought.thoughtText}'!` });
         } catch (err) {
             res.status(500).json(err);
         }
@@ -91,19 +91,16 @@ module.exports = {
     async removeReactionById(req, res) {
         try{
             const reactionId = req.params.reactionId;
-            const reaction = await Reaction.findOne({ _id: reactionId });
-            if (!reaction) {
-                return res.status(404).json({ message: 'No reaction found with this id!' });        
-            }
+
             const thought = await Thought.findOneAndUpdate(
                 { _id: req.params.thoughtId },
-                { $pull: { reactions: { _Id: reactionId } } },
+                { $pull: { reactions: { reactionId: reactionId } } },
                 { new: true }
             );
             if (!thought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }
-            res.json(thought, { message: `Successfully deleted the reaction: "${reaction.reactionBody}`});
+            res.json({ message: `Successfully deleted the reaction with ID: ${reactionId}`, thought });
         } catch (err) {
             res.status(500).json(err);
         }
