@@ -24,15 +24,16 @@ const thoughtSchema = new Schema(
             type: String,
             required: true,
         },
-        reactions: [reactionSchema]
+        reactions: [reactionSchema] // array of nested subdocuments created with the reactionSchema
     },
-    // allows for virtuals
+    // allows for virtuals and getters
+    // getters: true allows us to use a getter function to format the timestamp before it gets to the controller
     {
         toJSON: {
             getters: true,
             virtuals: true,
         },
-        id: false
+        id: false // prevents virtuals from creating another id field
 
     }
 );

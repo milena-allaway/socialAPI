@@ -4,7 +4,8 @@ module.exports = {
     // GET all users
     async getAllUsers(req, res) {
         try {
-            const users = await User.find();
+            const users = await User.find()
+                .select('-__v'); // exclude the __v field
             res.json(users);
         } catch (err) {
             res.status(500).json(err);
@@ -13,7 +14,17 @@ module.exports = {
     // GET a single user by its _id and populated thought and friend data
     async getUserById(req, res) {
         try {
-            const user = await User.findOne({ _id: req.params.userId });
+            const user = await User.findOne({ _id: req.params.userId })
+                .select('-__v') 
+                .populate({
+                    path: 'thoughts', // populate the thought field for the user
+                    select: '-__v' // exclude the __v field
+                })
+                .populate({
+                    path: 'friends', // populate the friends field for the user
+                    select: '-__v' // exclude the __v field
+                });            
+            
             if (!user) {
                 return res.status(404).json({ message: 'No user found with this id!' });        
             }
@@ -25,7 +36,8 @@ module.exports = {
     // POST a new user
     async createUser(req, res) {
         try {
-            const user = await User.create(req.body);
+            const user = await User.create(req.body)
+                .select('-__v');
             res.json(user);
         } catch (err) {
             res.status(500).json(err);
@@ -110,16 +122,28 @@ module.exports = {
             if (!friend) {
                 return res.status(404).json({ message: 'No friend found with this id!' });        
             }
-            const user = await User.findOneAndUpdate(
+
+            const user = await User.findOne({ _id: req.params.userId });
+            if (!user) {
+                return res.status(404).json({ message: 'No user found with this id!' });        
+            }
+            
+            // Check if the friendId is in the user's friends list
+            const isFriend = user.friends.includes(friendId);
+
+            if (!isFriend) {
+            return res.status(400).json({ message: 'These users are not friends!' });
+            }
+            
+            // Remove the friend only if they are already friends
+            const updatedUser = await User.findOneAndUpdate(
                 { _id: req.params.userId },
                 { $pull: { friends: friendId } },
                 { new: true }
             );
-            if (!user) {
-                return res.status(404).json({ message: 'No user found with this id!' });        
-            }
+
             // respond with user and friend data
-            res.json({message: `Successfully removed ${friend.username} from ${user.username}'s friends list!`, user});
+            res.json({message: `Successfully removed ${friend.username} from ${user.username}'s friends list!`});
         } catch (err) {
             res.status(500).json(err);
         }

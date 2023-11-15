@@ -1,8 +1,9 @@
 const { Schema, Types, model } = require('mongoose');
 
+// reaction schema
 const reactionSchema = new Schema(
     {
-        reactionId: {
+        reactionId: { // set custom id to avoid confusion with parent thought's _id field
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId(),
         },
@@ -14,7 +15,7 @@ const reactionSchema = new Schema(
         },
         username: {
             type: String,
-            required: true,
+            required: [true, 'Username is required!']
         },
         createdAt: {
             type: Date,
@@ -25,7 +26,7 @@ const reactionSchema = new Schema(
             }
         }
     },
-    // allows for virtuals
+    // allows for virtuals and getters
     {
         toJSON: {
             virtuals: true,
@@ -34,7 +35,7 @@ const reactionSchema = new Schema(
         id: false
     },
 );
-
+// create the Reaction model using the reactionSchema
 const Reaction = model('Reaction', reactionSchema);
-
+// export the Reaction model and the reactionSchema
 module.exports = { reactionSchema, Reaction };

@@ -9,21 +9,21 @@ const userSchema = new Schema(
             type: String,
             unique: [true, 'Username already taken, please try again!'],
             required: [true, 'Username is required!'],
-            trim: true
+            trim: true // removes whitespace before and after string
         },
         email: {
             type: String,
             required: [true, 'Email address is required'],
             unique: [true, 'Email address already in use!'],
-            match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid e-mail address']
+            match: [/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid e-mail address'] // regex to validate email address
         },
-        thoughts: [
+        thoughts: [ // array of _id values referencing the Thought model
             {
                 type: Schema.Types.ObjectId,
                 ref: 'Thought'
             }
         ],
-        friends: [
+        friends: [ // array of _id values referencing the User model (self-reference)
             {
                     type: Schema.Types.ObjectId,
                     ref: 'User'

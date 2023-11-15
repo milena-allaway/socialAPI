@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+// all of these user related methods are imported from the user-controller
+// methods are defined in the user-controller and will use the /api/users/... path
 const {
     getAllUsers,
     getUserById,

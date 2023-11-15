@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+// all of these thought related methods are imported from the thought-controller
+// methods are defined in the thought-controller and will use the /api/thoughts/... path
 const {
     getAllThoughts,
     getThoughtById,

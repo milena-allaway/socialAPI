@@ -4,7 +4,8 @@ module.exports = {
     // GET all thoughts
     async getAllThoughts(req, res) {
         try {
-            const thoughts = await Thought.find();
+            const thoughts = await Thought.find()
+                .select('-__v');
             res.json(thoughts);
         } catch (err) {
             res.status(500).json(err);
