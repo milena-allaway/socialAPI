@@ -43,8 +43,13 @@ Create a Thought:
 
 
 ## Credits
-
-
+The class examples and activities for module 18 were very helpful in completing this project. Along with the Mongoose documentation, ChatGPT, Stackoverflow, Geeksforgeeks, and Google.
+* [Mongoose Documentation](https://mongoosejs.com/docs/api.html)
+* https://mongoosejs.com/docs/schematypes.html
+* https://mongoosejs.com/docs/api/query.html#Query.prototype.findOneAndUpdate()
+* [ChatGPT](https://chat.openai.com/)
+* https://stackoverflow.com/questions/18022365/mongoose-validate-email-syntax
+* https://www.geeksforgeeks.org/mongoose-schematypes-getters/
 
 ## License
   This project is licensed under the MIT License. 
