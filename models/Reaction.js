@@ -36,6 +36,6 @@ const reactionSchema = new Schema(
     },
 );
 // create the Reaction model using the reactionSchema
-const Reaction = model('Reaction', reactionSchema);
+// const Reaction = model('Reaction', reactionSchema);
 // export the Reaction model and the reactionSchema
-module.exports = { reactionSchema, Reaction };
+module.exports = { reactionSchema };

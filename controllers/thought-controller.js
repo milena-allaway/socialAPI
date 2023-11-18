@@ -55,8 +55,19 @@ module.exports = {
             res.status(500).json(err);
         }
     },
-    // DELETE to remove a thought by its _id
+    // DELETE to remove a thought by its _id and update the associated user model
     async deleteThoughtById(req, res) {
+        // try {
+        //     const thought = await Thought.findOneAndDelete(
+        //         { _id: req.params.thoughtId }
+        //     );
+        //     if (!thought) {
+        //         return res.status(404).json({ message: 'No thought found with this id!' });
+        //     }
+        //     res.json({ message: `Successfully deleted the thought '${thought.thoughtText}'!` });
+        // } catch (err) {
+        //     res.status(500).json(err);
+        // }
         try {
             const thought = await Thought.findOneAndDelete(
                 { _id: req.params.thoughtId }
@@ -64,9 +75,15 @@ module.exports = {
             if (!thought) {
                 return res.status(404).json({ message: 'No thought found with this id!' });
             }
-            res.json({ message: `Successfully deleted the thought '${thought.thoughtText}'!` });
+            const user = await User.findOneAndUpdate(
+                { username: thought.username },
+                { $pull: { thoughts: thought._id } },
+                { new: true }
+            );
+            res.json({ message: `Successfully deleted the thought '${thought.thoughtText}'!`, user });
         } catch (err) {
             res.status(500).json(err);
+            
         }
     },
     // POST to add a reaction to a thought by its _id
